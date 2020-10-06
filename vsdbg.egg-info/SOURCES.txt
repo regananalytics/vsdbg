@@ -1,0 +1,9 @@
+README.md
+setup.py
+vsdbg.py
+vsdbg.egg-info/PKG-INFO
+vsdbg.egg-info/SOURCES.txt
+vsdbg.egg-info/dependency_links.txt
+vsdbg.egg-info/entry_points.txt
+vsdbg.egg-info/requires.txt
+vsdbg.egg-info/top_level.txt

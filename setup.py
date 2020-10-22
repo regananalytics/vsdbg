@@ -1,5 +1,5 @@
 from setuptools import setup
-import __about__
+from vsdbg import __about__
 
 setup(
     name='vsdbg',

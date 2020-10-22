@@ -1,0 +1,7 @@
+.vscode
+*__pycache__*
+vsdbg.egg-info
+dist
+version.py
+*.db
+.python-version

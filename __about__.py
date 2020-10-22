@@ -1,4 +1,4 @@
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 __author__ = 'Dan Regan'
 __author_email__ = 'dan.regan@capellaspace.com'
 __description__ = 'Visual Studio Debug Helper'

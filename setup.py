@@ -4,7 +4,7 @@ from setuptools import setup
 here = os.path.dirname(__file__)
 
 about = {}
-with open(os.path.join(here, '__about__.py')) as fobj:
+with open(os.path.join(here, 'vsdbg', '__about__.py')) as fobj:
     exec(fobj.read(), about)
 
 setup(

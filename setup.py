@@ -1,19 +1,20 @@
-import os
 from setuptools import setup
-
-here = os.path.dirname(__file__)
-
-about = {}
-with open(os.path.join(here, 'vsdbg', '__about__.py')) as fobj:
-    exec(fobj.read(), about)
+from vsdbg import __about__
 
 setup(
     name='vsdbg',
-    version=about['__version__'],
-    py_modules=['vsdbg'],
+    version=__about__.__version__,
+    packages = ['vsdbg'],
     install_requires=['debugpy'],
     entry_points='''
         [console_scripts]
         vsdbg=vsdbg:dbg
     ''',
+    include_package_data = True,
+    author               = __about__.__author__,
+    author_email         = __about__.__author_email__,
+    maintainer           = __about__.__author__,
+    maintainer_email     = __about__.__author_email__,
+    description          = __about__.__description__,
+    url                  = __about__.__url__,
 )

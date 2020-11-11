@@ -1,5 +1,5 @@
-build:
-  stage: build-package
+build-package:
+  stage: build
   image: python:3.8-slim
   variables:
     TWINE_USERNAME: "${CAPELLA_PYPI_SVC_USER}"

@@ -31,6 +31,13 @@ Open the repository folder in VS Code.
 In one of the primary ".py" files of your code (`__init__`.py or `__main__`.py are great options) add the following line to your imports:
 
 ```python
+import vsdbg_ez
+```
+
+or
+
+
+```python
 import vsdbg; vsdbg.dbg()
 ```
 
@@ -41,6 +48,14 @@ Alternative ports can be specified using:
 import vsdbg: vsdbg.dbg(port=5679)
 ```
 for instance.
+
+By default, vsdbg will halt the execution of the program once it has been imported until the user attaches a debugger (i.e. hits `F5` in VSCode).
+
+To use vsdbg without halting execution (mainly for long-executing scripts) you can import thusly:
+
+```python
+import vsdbg; vsdbg.dbg(wait=False)
+```
 
 To tell VS Code to listen on port `5678` for a debugging session, press `F5` or select from the menu `Run -> Start Debugging`.
 

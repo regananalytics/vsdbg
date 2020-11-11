@@ -1,14 +1,15 @@
-deploy-package:
-    stage: deploy
-    image: python:3.8-slim
-    variables:
-      TWINE_USERNAME: "${CAPELLA_PYPI_SVC_USER}"
-      TWINE_PASSWORD: "${CAPELLA_PYPI_SVC_PASS}"
-      TWINE_REPOSITORY_URL: "${CAPELLA_PYPI_REPO_URL}"
-    script:
-      - pip install twine
-      - python setup.py sdist
-      - twine upload --verbose dist/*
-    only:
-      - tags
+package:
+  stage: package
+  image: python:3.8-slim
+  variables:
+    TWINE_USERNAME: "${CAPELLA_PYPI_SVC_USER}"
+    TWINE_PASSWORD: "${CAPELLA_PYPI_SVC_PASS}"
+    TWINE_REPOSITORY_URL: "${CAPELLA_PYPI_REPO_URL}"
+  script:
+    - cp -rf ./vsdbg/vsdbg.py ./vsdbg-ez/vsdbg.py
+    - pip install twine
+    - python setup.py sdist
+    - twine upload --verbose dist/*
+  only:
+    - tags
   

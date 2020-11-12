@@ -1,0 +1,4 @@
+include __about__.py
+include __init__.py
+recursive-include vsdbg *
+recursive-include vsdbg_ez *

@@ -1,1 +1,1 @@
-from . import dbg as dbg
+from .vsdbg import dbg as dbg

@@ -1,2 +1,2 @@
-from . import dbg as dbg
+from .vsdbg_ez import dbg as dbg
 dbg()

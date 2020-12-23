@@ -12,6 +12,11 @@ setup(
         'debugpy >= 1.0.0',
         'setuptools >= 50.3.2'
     ],
+    entry_points={
+        'console_scripts': [
+            'vsdbg = vsdbg.vsdbg:main',
+        ]
+    },
     include_package_data = True,
     author               = __about__.__author__,
     author_email         = __about__.__author_email__,

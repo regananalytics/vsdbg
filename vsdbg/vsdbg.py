@@ -1,51 +1,58 @@
-#import vsdbg_ez
 import os
 import sys
+import click
 import debugpy
 import shutil
 import subprocess
 from contextlib import contextmanager
+from pathlib import Path
 from tempfile import TemporaryDirectory
 
 PORT = 5678
 
 def dbg(port=PORT, wait=True):
     debugpy.listen(port)
-    if wait: debugpy.wait_for_client()
-
+    if wait:
+        print('VSDBG: Waiting for Debug Session to Continue...')
+        debugpy.wait_for_client()
 
 
 ## CLI STUFF
 
 @contextmanager
-def temp_copy(filename):
+def temp_copy(fullfile):
+    if not isinstance(fullfile, Path):
+        Path(fullfile)
+    file = fullfile.stem + fullfile.suffix
+    path = fullfile.parent
     with TemporaryDirectory() as t:
         try:
-            temp_path = os.path.join(t, filename)
-            shutil.copy(filename, temp_path)
+            temp_path = os.path.join(t, file)
+            shutil.copy(fullfile, temp_path)
             yield temp_path
         finally:
-            os.remove(filename)
-            shutil.copy(temp_path, filename)
+            pass
+            os.remove(fullfile)
+            shutil.copy(temp_path, fullfile)
 
 @contextmanager
 def append_vsdbg(arg_dict):
-    is_module = False
-    if arg_dict['flags']:
-        if '-m' in arg_dict['flags']:
-            # handle module
-            pymod = arg_dict['py']
-            is_module = True
+    path = Path.cwd()
+    if arg_dict['mod']:
+        # This is a python module, find __init__.py
+        modparts = arg_dict['cmd'][0].split('.')
+        path = Path(os.path.join(path, *modparts))
+        if not os.path.isdir(path):
+            raise Exception(f'VSDBG:  Could not find module at {path}')
+        fullfile = path / '__init__.py'
+        if not os.path.isfile(fullfile):
+            raise Exception(f'VSDBG:  Could not find __init__.py at {path}')
     else:
-        pyfile = arg_dict['py']
-    # Assume pyfile for now
-    with temp_copy(pyfile) as t:
+        fullfile = path / arg_dict['cmd'][0]
+    with temp_copy(fullfile) as t:
         try:
-            if is_module:
-                pass
-            else:
-                prepend(pyfile, 'import vsdbg_ez')
-            yield pyfile
+            prepend(fullfile, 'import vsdbg_ez')
+            yield fullfile
         finally:
             pass
 
@@ -57,26 +64,15 @@ def prepend(filename, line):
         f.write(line + '\n' + content)
 
 
-def parse_args():
-    arg_dict = {'self':None, 'flags':[], 'py':[], 'out':None}
-    args = sys.argv
-    arg_dict['self'] = args[0]
-    is_module = False
-    for arg in args[1:]:
-        if arg.endswith('.py') or is_module:
-            is_module = False
-            arg_dict.update({'py':arg})
-        elif arg.startswith('-'):
-            if arg == '-m':
-                is_module = True
-            arg_dict.update({'flags':arg_dict['flags'].append(arg)})
-    return args, arg_dict
-
-def main():
-    # Get args
-    args, arg_dict = parse_args()
-    print(f'Dict: {arg_dict}')
-    cmd = f'python {" ".join(args[1:])}'
-    print(f'CMD: {cmd}')
-    with append_vsdbg(arg_dict) as py:
+@click.command()
+@click.argument('cmd', nargs=-1)
+@click.option('--bin', '-b', is_flag=True)
+@click.option('--mod', '-m', is_flag=True)
+def main(**kwargs):
+    if kwargs['bin']:
+        cmd = ' '
+    else:
+        cmd = f"python {'-m' if kwargs['mod'] else ''} {' '.join(kwargs['cmd'])}"
+    with append_vsdbg(kwargs) as py:
+        pass
         subprocess.run(cmd, shell=True)

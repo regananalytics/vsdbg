@@ -16,7 +16,7 @@ This package contains a single function which opens a debugging session on a loc
 To use vsdbg on a PyPi repo, first clone the repository you plan to debug to a local directory:
 
 ```bash
-git clone git@gitlab.corp.capellaspace.com:<package repository>
+git clone <package repository>
 ```
 
 To install the repository in development mode, run:
@@ -66,5 +66,3 @@ By default, Remote Attach will listen on port `5678`, or it can be configured to
 You can now call the python package from any terminal. Execution will pause when the package reaches the `vsdbg.dbg()` call, and it will wait for the debugger to connect before proceeding.
 
 To attach the VS Code debugger, simply press `F5` or select "Run and Debug" from the menu. VS Code will attach to the open debug session and you will be able to step through the code and set breakpoints as you would with any other python package.
-
-This works on any repository, not just Capella ones. Enjoy!

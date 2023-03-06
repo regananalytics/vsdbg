@@ -1,5 +1,5 @@
 __version__ = '0.2.4'
 __author__ = 'Dan Regan'
-__author_email__ = 'dan.regan@capellaspace.com'
+__author_email__ = 'dan@regan-analytics.com'
 __description__ = 'Visual Studio Debug Helper'
-__url__ = 'https://gitlab.corp.capellaspace.com/GroundSoftware/vsdbg'
+__url__ = 'https://github.com/regananalytics/vsdbg'

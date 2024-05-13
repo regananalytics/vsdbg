@@ -3,7 +3,7 @@ VSDBG is a simple helper utility for debugging PyPi packages in Visual Studio Co
 Quite simply, this package makes it easy to open a debugging session for a python package that has been installed with
 
 ```bash
-pip install -e <path to repo>
+pip install <path to repo>
 ```
 
 ## Installation Requirements
@@ -31,21 +31,15 @@ Open the repository folder in VS Code.
 In one of the primary ".py" files of your code (`__init__`.py or `__main__`.py are great options) add the following line to your imports:
 
 ```python
-import vsdbg_ez
-```
-
-or
-
-
-```python
-import vsdbg; vsdbg.dbg()
+import vsdbg
 ```
 
 This imports and calls the dbg function using the default port `5678`.
 Alternative ports can be specified using:
 
 ```python
-import vsdbg: vsdbg.dbg(port=5679)
+import vsdbg
+vsdbg.dbg(port=5679)
 ```
 for instance.
 
@@ -54,7 +48,8 @@ By default, vsdbg will halt the execution of the program once it has been import
 To use vsdbg without halting execution (mainly for long-executing scripts) you can import thusly:
 
 ```python
-import vsdbg; vsdbg.dbg(wait=False)
+import vsdbg
+vsdbg.dbg(wait=False)
 ```
 
 To tell VS Code to listen on port `5678` for a debugging session, press `F5` or select from the menu `Run -> Start Debugging`.

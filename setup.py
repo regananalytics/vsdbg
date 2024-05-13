@@ -4,19 +4,11 @@ import __about__
 setup(
     name='vsdbg',
     version=__about__.__version__,
-    packages = [
-        'vsdbg', 
-        'vsdbg_ez'
-    ],
+    packages = ['vsdbg'],
     install_requires=[
         'debugpy >= 1.0.0',
         'setuptools >= 50.3.2'
     ],
-    entry_points={
-        'console_scripts': [
-            'vsdbg = vsdbg.vsdbg:main',
-        ]
-    },
     include_package_data = True,
     author               = __about__.__author__,
     author_email         = __about__.__author_email__,
